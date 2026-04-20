@@ -18,19 +18,26 @@
 ## 使用方法
 ```bash
 # 英文界面，最小输出
-python chat_export_md.py new.json -o readable_conversations
+python chat_export_md.py conversations.json -o readable_conversations
 
 # 中文界面，开启所有可选字段
-python chat_export_md.py new.json -o readable_conversations --show-all --lang zh
+python chat_export_md.py conversations.json -o readable_conversations --show-all --lang zh
 
 # 完整日志（text + JSONL）和诊断包
-python chat_export_md.py new.json -o readable_conversations \
+python chat_export_md.py conversations.json -o readable_conversations \
   --show-all --diagnose --log-format both
 
 # 更安全的渲染与完整 traceback
-python chat_export_md.py new.json -o readable_conversations \
+python chat_export_md.py conversations.json -o readable_conversations \
   --safe-markdown --traceback full
 ```
+
+> **关于分片导出文件的说明**  
+> 如果导出的数据被拆分为多个文件（例如 `conversations-000.json`、`conversations-001.json` 等），在运行本工具之前，建议先将它们合并为一个单一的 JSON 文件。例如：
+> ```bash
+> jq -s 'add' conversations-*.json > conversations.json
+> ```
+> 这样可以确保解析器能够在一次处理过程中完整读取所有对话数据。
 
 ## 如何导出 ChatGPT 历史聊天记录
 参阅官方指南：https://help.openai.com/en/articles/7260999-how-do-i-export-my-chatgpt-history-and-data
