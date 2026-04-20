@@ -20,19 +20,26 @@ Convert exported ChatGPT JSON conversations to readable Markdown with robust par
 ## Usage
 ```bash
 # Minimal (English UI)
-python chat_export_md.py new.json -o readable_conversations
+python chat_export_md.py conversations.json -o readable_conversations
 
 # Chinese UI with all optional fields
-python chat_export_md.py new.json -o readable_conversations --show-all --lang zh
+python chat_export_md.py conversations.json -o readable_conversations --show-all --lang zh
 
 # Full logs (text + JSONL) and diagnose bundle
-python chat_export_md.py new.json -o readable_conversations \
+python chat_export_md.py conversations.json -o readable_conversations \
   --show-all --diagnose --log-format both
 
 # Safer rendering and full tracebacks
-python chat_export_md.py new.json -o readable_conversations \
+python chat_export_md.py conversations.json -o readable_conversations \
   --safe-markdown --traceback full
 ```
+
+> **Note on split exports**  
+> If your exported data comes as multiple files (e.g., `conversations-000.json`, `conversations-001.json`, etc.), you should merge them into a single JSON file before running the tool. For example:
+> ```bash
+> jq -s 'add' conversations-*.json > conversations.json
+> ```
+> This ensures the parser can process all conversations in one pass.
 
 ## How to export ChatGPT history
 Follow the official guide: https://help.openai.com/en/articles/7260999-how-do-i-export-my-chatgpt-history-and-data
